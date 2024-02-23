@@ -1,63 +1,35 @@
 import React, { useState } from "react";
 
 import "./ExpenseForm.css";
+//shifted into multiple state
 const ExpenseForm = () => {
-  //here we are updating and also storing data in some variable
-  //you can have multiple states, multiple state pieces also
-  //all three states are related to form which store some user input basically same concept
-  //so go for one state instead of three
-  //Both are fine approaches but copying old userinput is necessary
-  /*
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
   const [enteredDate, setEnteredDate] = useState(""); //stored in strings because event.target.val lways return string
-*/
-  const [userInput, setUserInput] = useState({
-    enteredTitle: "",
-    enteredAmount: "",
-    enteredDate: "",
-  });
+
   const titleChangeHandler = (event) => {
-    //setEnteredTitle(event.target.value); //for different states
-    //for one state
-    /* setUserInput({  
-      ...userInput,
-      enteredTitle: event.target.value,
-
-    });*/
-    //instead of calling like  as above you should use as follows
-
-    //for one state only but diferent approach
-    setUserInput((prevState) => {
-      //this ananymous user i/p function which youpass to user i/p here, will automatically
-      // be executed by react and it will receive the previous state snapshot for that state what you are calling
-      // in this case object state here(this-const [userInput, setUserInput] = useState({enteredTitle: "",enteredAmount: "",enteredDate: "",});)
-      //and we return new state and that could be should be our object where i copy in the key value pairs from previous state with spread operator
-      //but where we thean also override in this case here
-      //In previous approach, theoretically react will schedule a lot of state updates at same time, you could be depending on outdated or incorrect state snapshot
-      //In current approach , react will guarantee that snapshot of state that will give here in this inner function(setUserInput(prevstate)) will always be recent state snapshot
-      //keeping all scheduled state updatesin mind
-      return { ...prevState, enteredTitle: event.target.value };
-    });
+    setEnteredTitle(event.target.value); //for different states
   };
 
   const amountChangeHandler = (event) => {
-    //setEnteredAmount(event.target.value);
-    setUserInput({
-      ...userInput,
-      enteredAmount: event.target.value,
-    });
+    setEnteredAmount(event.target.value);
   };
   const dateChangeHandler = (event) => {
-    //setEnteredDate(event.target.value);
-    setUserInput({
-      ...userInput,
-      enteredDate: event.target.value,
-    });
+    setEnteredDate(event.target.value);
+  };
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    const expenseData = {
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: new Date(enteredDate)
+    };
+    console.log(expenseData);
   };
 
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__controls">
           <label>Title</label>
