@@ -38,7 +38,7 @@ const ExpenseForm = (props) => {
   return (
     <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
-        <div className="new-expense__controls">
+        <div className="new-expense__control">
           <label>Title</label>
 
           <input
@@ -47,7 +47,7 @@ const ExpenseForm = (props) => {
             onChange={titleChangeHandler}
           />
         </div>
-        <div className="new-expense__controls">
+        <div className="new-expense__control">
           <label>Amount</label>
           <input
             type="number"
@@ -57,8 +57,8 @@ const ExpenseForm = (props) => {
             onChange={amountChangeHandler}
           />
         </div>
-        <div className="new-expense__controls">
-          <label>Title</label>
+        <div className="new-expense__control">
+          <label>Date</label>
           <input
             type="date"
             min="2019-01-01"
@@ -76,3 +76,4 @@ const ExpenseForm = (props) => {
 };
 
 export default ExpenseForm;
+
