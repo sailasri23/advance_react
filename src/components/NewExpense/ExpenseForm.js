@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-
 import "./ExpenseForm.css";
-//shifted into multiple state
+
 const ExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
-  const [enteredDate, setEnteredDate] = useState(""); //stored in strings because event.target.val lways return string
+  const [enteredDate, setEnteredDate] = useState("");
 
   const titleChangeHandler = (event) => {
-    setEnteredTitle(event.target.value); //for different states
+    setEnteredTitle(event.target.value);
   };
 
   const amountChangeHandler = (event) => {
     setEnteredAmount(event.target.value);
   };
+
   const dateChangeHandler = (event) => {
     setEnteredDate(event.target.value);
   };
@@ -25,22 +25,17 @@ const ExpenseForm = (props) => {
       amount: enteredAmount,
       date: new Date(enteredDate),
     };
-    //console.log(expenseData);
     props.onSaveExpenseData(expenseData);
     setEnteredTitle("");
     setEnteredAmount("");
     setEnteredDate("");
   };
-  //by using state we can implement two way binding which means that for input we just dont listen to changes
-  //but we can also pass anew value back into i/p
-  //so that we can reset or change input programatically by just addding value attribute
 
   return (
     <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-
           <input
             type="text"
             value={enteredTitle}
@@ -76,4 +71,3 @@ const ExpenseForm = (props) => {
 };
 
 export default ExpenseForm;
-

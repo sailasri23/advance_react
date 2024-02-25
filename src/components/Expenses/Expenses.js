@@ -1,60 +1,49 @@
-
-import React from 'react';
-
-import ExpenseItem from './ExpenseItem';
-import Card from '../UI/Card';
-import './Expenses.css';
+import React, { useState } from "react";
+import ExpenseItem from "./ExpenseItem";
+import Card from "../UI/Card";
+import ExpensesFilter from "./ExpensesFilter";
+import "./Expenses.css";
 
 const Expenses = (props) => {
+  const [filteredYear, setFilteredYear] = useState("all");
+
+  const filterChangeHandler = (selectedYear) => {
+    setFilteredYear(selectedYear);
+  };
+
+  // Filtered expenses by year
+  let filteredExpenses = props.items;
+  if (filteredYear !== "all") {
+    filteredExpenses = props.items.filter((expense) => {
+      return expense.date.getFullYear().toString() === filteredYear;
+    });
+  }
+
+  // All expenses
+  const allExpenses = filteredExpenses.map((expense) => (
+    <ExpenseItem
+      key={expense.id}
+      title={expense.title}
+      amount={expense.amount}
+      date={expense.date}
+    />
+  ));
+
   return (
-    <Card className="expenses">
-      {props.items.map((expense) => (
-        <ExpenseItem
-          key={expense.id}
-          title={expense.title}
-          amount={expense.amount}
-          date={expense.date}
+    <div>
+      <Card className="expenses">
+        <ExpensesFilter
+          selected={filteredYear}
+          onChangeFilter={filterChangeHandler}
         />
-      ))}
-    </Card>
+        {allExpenses.length === 0 ? (
+          <p>No expenses found for the selected year.</p>
+        ) : (
+          allExpenses
+        )}
+      </Card>
+    </div>
   );
-}
+};
 
 export default Expenses;
-
-
-/*import React from 'react';
-
-import ExpenseItem from './ExpenseItem';
-import Card from '../UI/Card';
-import './Expenses.css';
-
-const Expenses = (props) => {
-  return (
-    <Card className="expenses">
-      <ExpenseItem
-        title={props.items[0].title}
-        amount={props.items[0].amount}
-        date={props.items[0].date}
-      />
-      <ExpenseItem
-        title={props.items[1].title}
-        amount={props.items[1].amount}
-        date={props.items[1].date}
-      />
-      <ExpenseItem
-        title={props.items[2].title}
-        amount={props.items[2].amount}
-        date={props.items[2].date}
-      />
-      <ExpenseItem
-        title={props.items[3].title}
-        amount={props.items[3].amount}
-        date={props.items[3].date}
-      />
-    </Card>
-  );
-}
-
-export default Expenses;
-*/
